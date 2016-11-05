@@ -1,7 +1,12 @@
-const ReactDOM = require('react-dom');
-const React = require('react')
-const Backbone = require('backbone');
+import ReactDOM from 'react-dom'
+import React from 'react'
+import Backbone from 'backbone'
+import $ from 'jquery'
 
-document.querySelector('#app-container').innerHTML = `<h1>YOLO</h1>`
+import App from './App.Component'
 
-new AppRouter()
+window.addEventListener('load', () => {
+
+  ReactDOM.render(<App />, document.getElementById('app'))
+
+})
