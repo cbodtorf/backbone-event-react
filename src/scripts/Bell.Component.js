@@ -5,6 +5,9 @@ import $ from 'jquery'
 
 const Bell = React.createClass({
 
+  /**
+  * Bell has an onClick attribute that bubbles it's effect to the Parent Component. 
+  */
   render() {
 
     return(
