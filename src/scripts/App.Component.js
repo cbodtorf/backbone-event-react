@@ -5,28 +5,17 @@ import $ from 'jquery'
 
 import Dog from './Dog.Component'
 import Bell from './Bell.Component'
+import { DogModel, BellModel } from './Models'
+
 
 const App = React.createClass({
   getInitialState() {
     /**
-    * Set up Backbone Models
+    * Instantiate Models (see Models.js for details)
     */
-    const DogModel = Backbone.Model.extend({})
-    const BellModel = Backbone.Model.extend({})
+    let George = new DogModel()
 
-    /**
-    * Instantiate Models with data
-    */
-    let George = new DogModel({
-      name: 'George',
-      salivating: false,
-      imageSrc: './images/dog_image.png'
-    })
-
-    let Bell = new BellModel({
-      ringing: false,
-      imageSrc: './images/bell-icon.png'
-      })
+    let Bell = new BellModel()
 
     /**
     * Set initialState
@@ -50,34 +39,28 @@ const App = React.createClass({
     * @param (string): the name of the event
     * @param (callback) a function that will run when triggered
     */
-    Backbone.Events.on('ringing', () => {
+    Backbone.Events.on('ringing', (optionalData) => {
       console.log('event heard!')
-      /**
-      * finding DOM nodes
-      */
-      let bell = document.querySelector('.bell')
-      let tongue = document.querySelector('.tongue')
+      console.log('Optional: ', optionalData);
 
       /**
       * IMPORTANT, reassign this.state (so we are directly modifying state)
       * then toggle the state using the '!' aka bang operator
       */
-      let newState = this.state
-      newState.dog.set('salivating', !newState.dog.get('salivating'))
-      newState.bell.set('ringing', !newState.bell.get('ringing'))
+      let freshBellMod = new BellModel()
+      let freshDoglMod = new DogModel()
+
+      freshDoglMod.set('salivating', !this.state.dog.get('salivating'))
+      freshBellMod.set('ringing', !this.state.bell.get('ringing'))
 
       /**
       * use React's setState() function an
       * @param (object): new state
       */
-      this.setState(newState)
-      if(newState.bell.get('ringing')) {
-        bell.classList.add('ringing')
-        tongue.style.display = 'block'
-      } else {
-        bell.classList.remove('ringing')
-        tongue.style.display = 'none'
-      }
+      this.setState({
+        dog: freshDoglMod,
+        bell: freshBellMod
+      })
 
       /**
       * we are binding 'this' to the Backbone.Events.on() function
@@ -94,6 +77,9 @@ const App = React.createClass({
   */
   _ringBell(){
     console.log('click ring');
+
+    let optionalData = 'this is not imporant'
+
     Backbone.Events.trigger('ringing', optionalData)
   },
 

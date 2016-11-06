@@ -63,3 +63,18 @@ h1 {
 	80% {transform: rotate(-20deg)}
 	100% {transform: rotate(0deg)}
 }
+
+.dog-speak {
+	position: relative;
+  bottom: -100px;
+
+	input {
+		width: 100%;
+	}
+}
+
+.speech-bubble {
+	border: 2px solid black;
+  border-radius: 40px;
+  padding: 5px;
+}
